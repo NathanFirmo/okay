@@ -1,0 +1,44 @@
+settings:
+  databases:
+    - type: mysql
+      host: localhost
+      port: 30000
+      user: root
+      password: mysqlroot
+      dbname: accounts
+      alias: xpto
+beforeEach:
+  # seeds:
+  #   - db: xpto
+  #     file: seed.sql
+  hooks:
+    - target: GET https://postman-echo.com/get
+      # headers:
+      #   clientId: sample
+      #   clientSecret: password
+      # captures:
+      #   authToken: $.token
+tests:
+  - name: Check xpto
+    target: GET https://postman-echo.com/get
+    # headers:
+    #   Authtorization: '{{.authToken}}'
+    expect:
+      status: 200
+      body:
+        url: https://postman-echo.com/get
+  - name: Check xpto
+    target: GET https://postman-echo.com/get
+    # headers:
+    #   Authtorization: '{{.authToken}}'
+    expect:
+      status: 200
+      body:
+        url: https://postman-echo.com/get
+        # age: 26
+    dbChecks:
+      - db: xpto
+        query: SELECT name, id FROM User
+        expect:
+          - name: John Doe
+            id: 2
